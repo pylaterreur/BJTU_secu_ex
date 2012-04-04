@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     {
       const char *str(*argv);
       while (*str)
-	std::cout << static_cast<char>(A::data[*str++]);
+	std::cout << A::data[*str++];
       std::cout << std::endl;
     }
 }
