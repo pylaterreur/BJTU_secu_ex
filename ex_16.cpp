@@ -6,11 +6,11 @@
 template <unsigned... args>
 struct ArrayHolder
 {
-  static const unsigned int data[sizeof...(args)];
+  static const unsigned char data[sizeof...(args)];
 };
 
 template <unsigned... args>
-const unsigned ArrayHolder<args...>::data[sizeof...(args)] = { args... };
+const unsigned char ArrayHolder<args...>::data[sizeof...(args)] = { args... };
 
 template <size_t N, template<size_t> class F, unsigned... args>
 struct generate_array_impl
@@ -33,14 +33,21 @@ struct generate_array
 template <size_t index>
 struct MetaFunc
 {
-  enum { value = index + 1 };
+  enum { value = (('a' <= index && index <= 'z') ? -(index - 'z') + 'a'
+		  : ('A' <= index && index <= 'Z') ? -(index - 'Z') + 'A' 
+		  : index ) };
 };
 
-int main(void)
+int main(int argc, char *argv[])
 {
-  const size_t count = 5;
+  const size_t count = 256;
   typedef generate_array<count, MetaFunc>::result A;
 
-  for (size_t i = 0; i < count; ++i)
-    std::cout << A::data[i] << std::endl;
+  if (*++argv)
+    {
+      const char *str(*argv);
+      while (*str)
+	std::cout << static_cast<char>(A::data[*str++]);
+      std::cout << std::endl;
+    }
 }
