@@ -63,14 +63,7 @@ public:
 	  first = 'I';
 	if (second == 'J')
 	  second = 'I';
-
-	//	cout << first << second << endl;
-
 	EncryptPair(first, second);
-
-	//	cout << first << second << endl;
-
-
 	cipher += first;
 	cipher += second;
       }
@@ -114,9 +107,7 @@ int main(int argc, char *argv[])
       std::cerr << "usage: " << *argv << " keyword plaintext" << endl;
       return (-1);
     }
-
   Playfair playfair(argv[1]);
-
   cout <<
     playfair.Encrypt(argv[2])
        << endl;
